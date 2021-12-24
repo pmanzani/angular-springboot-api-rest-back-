@@ -23,13 +23,17 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+    	return userRepository.findAll();
     }
     
     @PostMapping("/delete")
-    public ResponseEntity removeUser(@RequestBody List<User> users) {
+    public ResponseEntity<List<User>> removeUser(@RequestBody List<User> users) {
     	userRepository.deleteAll(users);
-    	
     	return ResponseEntity.ok(users);
+    }
+    
+    @PostMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+    	return ResponseEntity.ok(userRepository.saveAndFlush(user));
     }
 }
